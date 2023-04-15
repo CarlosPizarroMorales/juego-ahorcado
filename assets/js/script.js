@@ -1,51 +1,97 @@
 /**********************************************
-**             PROBANDO ENLACE               **
-**********************************************/
-// console.log('HOla mundo!');
-
-/**********************************************
  **                VARIABLES                 **
  **********************************************/
-//* Elementos del DOM
+//* ELEMENTOS DEL DOM
 const palabraOcultaCaja = document.querySelector('#palabraOculta');
 const letterInput = document.getElementById('letraUsuario');
+const userInput = document.getElementById('inputLetraUsuario');
 const formulario = document.getElementById('formulario');
+const mensajes = document.querySelector('#mensajes');
 
-//* constantes y valores base
-const palabras = ['javascript', 'html', 'css', 'bootstrap', 'jquery', 'react', 'node', 'angular', 'vue', 'typescript', 'webpack', 'babel', 'json', 'api', 'ajax', 'dom', 'git', 'github', 'terminal', 'linux', 'windows', 'macos', 'python', 'java', 'php', 'ruby', 'sql', 'mongodb', 'firebase'];
-
-// ROBERTO: const palabraDesconocida
+//* CONSTANTES Y VALORES BASE
+const palabras = ['JAVASCRIPT', 'HTML', 'CSS', 'BOOTSTRAP', 'JQUERY', 'REACT', 'NODE', 'ANGULAR', 'VUE', 'TYPESCRIPT', 'WEBPACK', 'BABEL', 'JSON', 'API', 'AJAX', 'DOM', 'GIT', 'GITHUB', 'TERMINAL', 'LINUX', 'WINDOWS', 'MACOS', 'PYTHON', 'JAVA', 'PHP', 'RUBY', 'SQL', 'MONGODB', 'FIREBASE'];
 const palabra = palabras[Math.floor(Math.random() * palabras.length)]; 
 const cantCajas = palabra.length;
-// Roberto: arregloInicial             
 const letrasSueltas = palabra.split('');      
 const arregloFinal=[];
 let vistaLetras = '';
+let intentosMax = 5;
 
-console.log(palabra, cantCajas, letrasSueltas, arregloFinal);
+/**********************************************
+ **                 EVENTOS                   **
+ **********************************************/
+console.log(palabra, cantCajas, letrasSueltas); //! SOLO PARA DEBUG
+construirVistaLetras(palabra);                          // INICIA VISTA
+formulario.addEventListener('submit', capturaEntrada);  // INICIA JUEGO
 
+/**********************************************
+**      FUNCIONES  (Aprovecha hoisting)      **
+**********************************************/
 function construirVistaLetras(arr){
+
   for(let i=0; i<arr.length; i++){
     arregloFinal[i]="";
-    // arregloFinal.push('');
-    vistaLetras += `<div class="fs-1 border border-4 border-info bg-dark text-light p-4">${arr[i]}</div>`;
-    // console.log(vistaLetras);
+    vistaLetras += `<div class="fs-1 bg-dark text-light p-4 letra">${arr[i]}</div>`;
   }
+  
   palabraOcultaCaja.innerHTML = vistaLetras;
-} 
-
-function validarEntradaUsuario(){
-  const letra = letterInput.value.toLowerCase();
-  letterInput.value = '';
+  
+  const letrasDePalabra = palabraOcultaCaja.getElementsByClassName('letra');
+  for (let i = 0; i < letrasDePalabra.length; i++){
+    letrasDePalabra[i].classList.add('letraOculta');
+  }
 }
 
 function capturaEntrada(e){
-  e.preventDefault();
-  const letraIngresada = e.target.elements[0].value;
-  console.log(letraIngresada, typeof letraIngresada);
+  
+  e.preventDefault();                         // NO RELOAD DOCUMENTO
+
+  const letraIngresada = e.target.elements[0].value.toUpperCase();
+  
+  if (letraIngresada.trim() === '') return;   // GUARD CLAUSE
+  
+  userInput.value = '';                       // LIMPIAR INPUT LUEGO DE INTENTO
+  const coincidencia = evaluarCoincidencia(letraIngresada);
+  const estado = evaluaEstado(coincidencia, intentosMax);
+  console.log(estado);
 }
-/**********************************************
-**                 EVENTOS                   **
-**********************************************/
-construirVistaLetras(palabra);
-formulario.addEventListener('submit', capturaEntrada);
+
+function evaluarCoincidencia(letra){
+
+  const letrasDePalabra = palabraOcultaCaja.getElementsByClassName('letra');
+  let control = 0;
+  for (let i = 0; i < letrasDePalabra.length; i++) {
+    if (palabra[i] === letra) {
+      letrasDePalabra[i].classList.remove('letraOculta');
+      arregloFinal[i] = letra;
+      control++;
+    }  
+  }
+  console.log(palabra, arregloFinal, control);  //! SOLO PARA DEBUG
+  if ( control === 0 ) {
+    intentosMax--;
+    console.log(intentosMax);
+    return false;
+  }
+  return true;
+}
+
+function evaluaEstado(controlCoincidencia, intentos) {
+  //^ CASO GANAR
+  if (controlCoincidencia) {
+    if (palabra === arregloFinal.join()) {
+      console.log('You win');
+      mensajes.textContent = 'Ganaste maldito. La próxima vez será';
+      setTimeout(function(){
+        location.reload();
+      }, 3000);
+    }     
+  } else if (intentos === 1) {
+    //^ CASO PERDER
+    console.log('You died Loser!');
+    mensajes.textContent = 'Naaah. Eres un loser';
+    setTimeout(function(){
+      location.reload();
+    }, 3000);
+  }
+}

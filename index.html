@@ -10,34 +10,37 @@
     <link rel="stylesheet" href="./assets/css/style.css">
     
 
-    <title>Document</title>
+    <title>Ahorcado</title>
 
   </head>
   
-  <body class="bg-secondary container">
+  <body class="bg-secondary container pt-3">
 
       <header class="d-flex justify-content-around align-items-center">
-        <h1 class="display-1 text-danger">☠️ Llegó tu hora...☠️</h1>
+        <h1 class="display-1 text-danger">
+          ☠️ Llegó tu hora...☠️
+          <span>de morir ahorcado</span>
+        </h1>
         <button class="btn btn-lg px-4 bg-warning">JUGAR</button>
       </header>
       
       <!-- cajita donde el usuario escribe su intento -->
-      <section class="text-center p-3 border border-5 border-dark bg-warning rounded rounded-4 mx-auto my-4"  id="letraUsuario">
+      <section class="text-center p-3 border border-5 border-dark bg-dark rounded rounded-4 mx-auto my-4"  id="letraUsuario" title="el color de fondo cambia si tu intento no es válido">
         <form action="" class="w-100" id="formulario">
-          <input class="w-100 ps-5" type="text" minlength="1" maxlength="1">
+          <input class="w-100 ps-5 text-light" name="inputLetraUsuario" type="text" minlength="1" maxlength="1" pattern="[a-zA-Z]{1}" id="inputLetraUsuario">
         </form>
       </section>
 
       <!-- cajita con las letras de la palabra -->
-      <section class="container d-flex justify-content-around align-items-stretch border border-4 border-dark py-5" id="palabraOculta">
+      <section class="container d-flex justify-content-around align-items-stretch py-4" id="palabraOculta">
       </section>
 
       <!-- aca va la caja con el monito sufriendo -->
-      <section id="monito" class="p-5 bg-dark w-50 mt-4 mx-auto">
+      <section id="monito" class="p-3 w-50 mt-4 mx-auto">
         <img class="image-fluid w-100" src="./assets/img/ahorcado-1.png" alt="">
       </section>
     
-      <footer class="fixed-bottom text-center py-3 bg-dark text-warning" id="mensajes">
+      <footer class="fixed-bottom text-center fs-1 py-3 bg-dark text-warning" id="mensajes">
         aca irian mensajes de humillación para el usuario
       </footer>
     

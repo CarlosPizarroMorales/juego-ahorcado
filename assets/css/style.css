@@ -1,9 +1,7 @@
-/* MUY Buena practica pero innecesaria si usas BS */
-/* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-} */
+@font-face {
+  font-family: 'mi fuente gore';
+  src: url('../fonts/MeltedMonster.ttf');
+}
 
 body {
   height: 100vh;
@@ -11,14 +9,46 @@ body {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;  
+  font-family: 'mi fuente gore', sans-serif;
 }
 
+h1 {
+  color: red;
+}
+
+h1 span {
+  position: relative;
+  left: -30%;
+  top: 40px;
+  font-size: 2rem;
+}
 #palabraOculta {
   background-color: rgb(0, 0, 0, .5);
+  border-radius: 8px;
+  box-shadow: 2px 2px 4px rgb(252, 125, 125), -2px -2px 4px rgb(252, 125, 125), 4px 4px 16px rgb(211, 183, 183);
+}
+
+#palabraOculta>div {
+  border: 2px inset #212529;
+  border-radius: 8px;
+  box-shadow: 2px 2px 4px rgb(252, 125, 125), -2px -2px 4px rgb(252, 125, 125), 4px 4px 16px rgb(211, 183, 183);
 }
 
 #letraUsuario {
   font-size: 4rem;
   line-height: 4rem;
   width: 10rem;
+}
+
+/* OCULTA LAS LETRAS CAMBIANDO LA TRANSPARENCIA DEL COLOR DE LETRA */
+.letraOculta {
+  color: rgba(255,0,0,0)!important;
+}
+
+/* para dar una pista cuando el campo es valido o inválido */
+input:valid {
+  background-color: rgba(216, 0, 0, 0.8);
+}
+input:invalid {
+  background-color: rgba(214, 27, 27, 0.5);
 }
