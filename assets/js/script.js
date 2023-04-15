@@ -64,15 +64,16 @@ function evaluarCoincidencia(letra){
     if (palabra[i] === letra) {
       letrasDePalabra[i].classList.remove('letraOculta');
       arregloFinal[i] = letra;
-      control++;
+      control++;        // controla exito en intento != 0 es coincidencia 
     }  
   }
   console.log(palabra, arregloFinal, control);  //! SOLO PARA DEBUG
   if ( control === 0 ) {
     intentosMax--;
-    console.log(intentosMax);
+    console.log(`${intentosMax}to intentos`);
     return false;
   }
+    console.log(`${intentosMax}to intentos`);
   return true;
 }
 
